@@ -25,7 +25,7 @@ from pathlib import Path
 
 REPO = "BrunoPaulinoF/rdgen"
 RUSTDESK_VERSION = "1.5.3"
-RELEASE_NUMBER = "1"  # suba quando gerar de novo com a MESMA versao do RustDesk
+RELEASE_NUMBER = "2"  # suba quando gerar de novo com a MESMA versao do RustDesk
 
 SERVER = "148.230.73.219"
 SERVER_PORT = "21116"
@@ -59,9 +59,12 @@ def main() -> None:
         "enable-block-input": "Y",
         "allow-remote-config-modification": "N",
         "direct-server": "N",
+        # Sem senha FIXA (nenhum "password" no topo): so a senha de USO UNICO, aleatoria, que o
+        # RustDesk troca sozinho assim que alguem entra com ela (e apos 10 erros seguidos).
         "verification-method": "use-both-passwords",
-        # SEMPRE o cliente clica em "Aceitar": sem senha fixa, sem entrar sozinho.
-        "approve-mode": "click",
+        # Entra com a senha de uso unico (o cliente manda a foto e pode sair de perto) OU com o
+        # clique em "Aceitar" quando a equipe conecta sem a senha.
+        "approve-mode": "password-click",
         "allow-hide-cm": "N",
         "allow-remove-wallpaper": "Y",
         "enable-remote-printer": "Y",

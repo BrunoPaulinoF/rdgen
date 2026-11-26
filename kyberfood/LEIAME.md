@@ -3,7 +3,8 @@
 Programa de suporte remoto da KyberFood (RustDesk com o nosso nome, logo e servidor).
 O site `kyberfood.com.br/suporte` baixa o `SuporteKyberFood.exe` das *Releases* deste repositório.
 
-- O cliente **sempre** clica em "Aceitar" (sem senha fixa).
+- Sem senha fixa. A equipe entra com a **senha de uso único** que aparece na tela do cliente
+  (ela muda sozinha depois de cada acesso) **ou** o cliente clica em "Aceitar".
 - O cliente só **recebe** acesso e não consegue mudar as configurações.
 
 ## Gerar uma versão nova
