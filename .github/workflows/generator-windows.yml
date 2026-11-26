@@ -75,6 +75,10 @@ jobs:
     name: Build Windows
     needs: [build-RustDeskTempTopMostWindow, generate-bridge, setup]
     runs-on: ${{ matrix.job.os }}
+    # KyberFood: o passo "publicar no GitHub Releases (KyberFood)" cria a release.
+    permissions:
+      contents: write
+      actions: read
     strategy:
       fail-fast: false
       matrix:
@@ -784,6 +788,21 @@ jobs:
         continue-on-error: true
         run: |
           mv ./SignOutput/rustdesk.msi "./SignOutput/${{ env.filename }}.msi" || echo "rustdesk"
+
+      # KyberFood: sem servidor do rdgen (rdgen=kyberfood), o programa vai para uma release
+      # pública deste repositório; o site (kyberfood.com.br/suporte) baixa dali.
+      # Configuração em kyberfood/gerar-config.py.
+      - name: publicar no GitHub Releases (KyberFood)
+        if: ${{ env.rdgen == 'kyberfood' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.release_tag }}
+          name: ${{ env.release_tag }}
+          body: "Suporte KyberFood (RustDesk ${{ inputs.version }}) já apontado para o servidor da KyberFood. Gerado por kyberfood/gerar-config.py."
+          files: |
+            ./SignOutput/${{ env.filename }}.exe
+            ./SignOutput/${{ env.filename }}.msi
+          fail_on_unmatched_files: false
 
       - name: send file to rdgen server
         if: ${{ env.rdgen == 'true' }}
